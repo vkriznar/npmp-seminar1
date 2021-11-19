@@ -1,14 +1,29 @@
 from src.Gate import Gate
 
+import numpy as np
+from itertools import islice
+
 
 class Phase():
-    def __init__(self, operations=list()):
-        self.operations = operations
+    def __init__(self, gates=list()):
+        self.gates = gates
+        self.mat = None
 
     def addGate(self, gate=Gate(), location=None):
         if location is None:
             for i in range(gate.inputSize):
-                self.operations.append(gate)
+                self.gates.append(gate)
         else:
             for i in range(gate.inputSize):
-                self.operations.insert(location + i, gate)
+                self.gates.insert(location + i, gate)
+
+    def eval(self):
+        gatesIterator = iter(self.gates)
+        gate = next(gatesIterator)
+
+        self.mat = gate.mat
+        gatesIterator = islice(gatesIterator, gate.inputSize - 1, None)
+
+        for gate in gatesIterator:
+            self.mat = np.kron(self.mat, gate.mat)
+            gatesIterator = islice(gatesIterator, gate.inputSize - 1, None)
