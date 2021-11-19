@@ -6,6 +6,7 @@ class Qubit():
         self.state0 = state0
         self.state1 = state1
         self.vector = np.array([state0, state1])
+        self.mat = self.vector
 
     def __str__(self):
         return "Qubit: " + str(self.vector)
