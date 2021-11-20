@@ -30,6 +30,10 @@ class Phase():
         for i in range(gate.inputSize):
             self.nodes[location + i] = gate
 
+    def setNode(self, node=None, locationY=None):
+        for i in range(node.inputSize):
+            self.nodes[locationY + i] = node
+
     def getNormalizedGates(self):
         normalizedGates = list()
         nodesIterator = iter(self.nodes)
