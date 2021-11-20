@@ -66,3 +66,10 @@ class CNOT(Gate):
             [0, 0, 0, 1],
             [0, 0, 1, 0]
         ])
+
+
+# CONTROLLED Z
+class Z(Gate):
+    def __init__(self):
+        super().__init__("Z")
+        self.mat = H() @ CNOT() @ H()
