@@ -1,3 +1,5 @@
+import math
+
 from src.Qubit import Qubit
 from src.Gate import Gate
 from src.Phase import Phase
@@ -20,7 +22,11 @@ class Circuit():
 
         for phase in self.phases:
             for i in range(len(self.inputs)):
-                lines[i] += " -> [" + phase.gates[i].label + "]"
+                if phase.gates[i] is None:
+                    lines[i] += " -> " + (phase.getMaxLableLength()+2)*'-'
+                else:
+                    diff = phase.getMaxLableLength() - len(phase.gates[i].label)
+                    lines[i] += " -> " + math.floor(diff/2)*' ' + '[' + phase.gates[i].label + ']' + math.ceil(diff/2)*' '
 
         output = ""
         for line in lines:
@@ -36,7 +42,7 @@ class Circuit():
 
     def addPhase(self, phase=None, location=None):
         if phase is None:
-            phase = Phase()
+            phase = Phase(size=len(self.inputs))
         if location is None:
             self.phases.append(phase)
         else:
