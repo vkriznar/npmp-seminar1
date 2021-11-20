@@ -17,3 +17,7 @@ class QubitVisualizator():
 		b.show()
 		# For some reason b.show() immediately closes, as a workaround plt.show() was added
 		plt.show()
+
+	def animate(self):
+		# TODO
+		pass
