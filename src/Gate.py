@@ -24,13 +24,33 @@ class I(Gate):
         ])
 
 
-# NOT
+# PAULI X (NOT)
 class X(Gate):
     def __init__(self):
         super().__init__('X', inputSize=1, matSize=2)
         self.mat = np.array([
             [0, 1],
             [1, 0]
+        ])
+
+
+# PAULI Y
+class Y(Gate):
+    def __init__(self):
+        super().__init__('Y', inputSize=1, matSize=2)
+        self.mat = np.array([
+            [0, -1j],
+            [1j,  0]
+        ])
+
+
+# PAULI Z
+class Z(Gate):
+    def __init__(self):
+        super().__init__('Z', inputSize=1, matSize=2)
+        self.mat = np.array([
+            [1,  0],
+            [0, -1]
         ])
 
 
@@ -41,6 +61,36 @@ class H(Gate):
         self.mat = 1/math.sqrt(2) * np.array([
             [1,  1],
             [1, -1]
+        ])
+
+
+# PHASE Z = PAULI Z
+class Z(Gate):
+    def __init__(self):
+        super().__init__('Z', inputSize=1, matSize=2)
+        self.mat = np.array([
+            [1,  0],
+            [0, -1]
+        ])
+
+
+# PHASE S
+class S(Gate):
+    def __init__(self):
+        super().__init__('S', inputSize=1, matSize=2)
+        self.mat = np.array([
+            [1,  0],
+            [0, 1j]
+        ])
+
+
+# PHASE T
+class T(Gate):
+    def __init__(self):
+        super().__init__('T', inputSize=1, matSize=2)
+        self.mat = np.array([
+            [1, 0],
+            [0,  1/math.sqrt(2) + (1/math.sqrt(2))*1j]
         ])
 
 
