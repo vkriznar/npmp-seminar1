@@ -3,6 +3,7 @@ from src.Gate import Gate
 from src.Phase import Phase
 
 import numpy as np
+from functools import reduce
 
 
 class Circuit():
@@ -11,8 +12,21 @@ class Circuit():
         self.phases = list()
         self.currentPhase = None
 
-    def __repr__(self) -> str:
-        return 'Inputs: ({}), Circuit layout: {}'.format(','.join(map(lambda i: str(i), self.inputs)), '->'.join(map(lambda p: str(p), self.phases)))
+    def __repr__(self):
+        lines = dict()
+
+        for i in range(len(self.inputs)):
+            lines[i] = str(self.inputs[i])
+
+        for phase in self.phases:
+            for i in range(len(self.inputs)):
+                lines[i] += " -> [" + phase.gates[i].label + "]"
+
+        output = ""
+        for line in lines:
+            output += str(lines[line]) + '\n'
+
+        return str(output)
 
     def addInput(self, qubit=Qubit(), location=None):
         if location is None:
@@ -45,5 +59,4 @@ class Circuit():
         self.currentPhase = self.inputs[0]
         self.advancePhase(self.phases[0])
 
-    # TODO print circuit
     # TODO JSON export for visualization and other simulators?
