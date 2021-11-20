@@ -10,7 +10,8 @@ from functools import reduce
 
 class Circuit():
     def __init__(self, inputSize=1):
-        self.inputs = Phase(inputSize)
+        self.inputSize = inputSize
+        self.inputs = Phase(self.inputSize)
         self.phases = list()
         self.currentPhase = None
 
@@ -34,12 +35,19 @@ class Circuit():
 
         return str(output)
 
+    def setInputSize(self, inputSize):
+        self.inputs.setSize(inputSize)
+
+        for phase in self.phases:
+            phase.setSize(inputSize)
+
     def addInput(self, qubit=Qubit(), location=None):
         self.inputs.addGate(qubit, location)
 
     def addPhase(self, phase=None, location=None):
         if phase is None:
             phase = Phase(size=self.inputs.size)
+
         if location is None:
             self.phases.append(phase)
         else:

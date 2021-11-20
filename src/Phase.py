@@ -14,6 +14,18 @@ class Phase():
     def __str__(self):
         return "-".join(map(lambda g: g.label, self.nodes))
 
+    def setSize(self, size):
+        self.size = size
+        nodes = list()
+
+        for i in range(self.size):
+            if i < len(self.nodes):
+                nodes.append(self.nodes[i])
+            else:
+                nodes.append(None)
+
+        self.nodes = nodes
+
     def addGate(self, gate=Gate(), location=None):
         for i in range(gate.inputSize):
             self.nodes[location + i] = gate
@@ -35,6 +47,8 @@ class Phase():
         return reduce(lambda acc, gate: max(acc, 1 if gate is None else len(gate.label)), self.nodes, 0)
 
     def eval(self):
+        self.mat = np.array([1])
+
         for gate in self.getNormalizedGates():
             self.mat = np.kron(self.mat, gate.mat)
 
