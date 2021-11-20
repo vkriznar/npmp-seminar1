@@ -7,6 +7,7 @@ class Qubit():
         self.state1 = state1
         self.vector = np.array([state0, state1])
         self.mat = self.vector
+        self.inputSize = 1
 
     def __str__(self):
         return str(self.vector)

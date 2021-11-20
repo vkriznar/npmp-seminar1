@@ -9,24 +9,24 @@ from functools import reduce
 
 
 class Circuit():
-    def __init__(self, inputs=list()):
-        self.inputs = inputs
+    def __init__(self, inputSize=1):
+        self.inputs = Phase(inputSize)
         self.phases = list()
         self.currentPhase = None
 
     def __repr__(self):
         lines = dict()
 
-        for i in range(len(self.inputs)):
-            lines[i] = str(self.inputs[i])
+        for i in range(self.inputs.size):
+            lines[i] = str(self.inputs.nodes[i])
 
         for phase in self.phases:
-            for i in range(len(self.inputs)):
-                if phase.gates[i] is None:
+            for i in range(self.inputs.size):
+                if phase.nodes[i] is None:
                     lines[i] += " -> " + (phase.getMaxLableLength()+2)*'-'
                 else:
-                    diff = phase.getMaxLableLength() - len(phase.gates[i].label)
-                    lines[i] += " -> " + math.floor(diff/2)*' ' + '[' + phase.gates[i].label + ']' + math.ceil(diff/2)*' '
+                    diff = phase.getMaxLableLength() - len(phase.nodes[i].label)
+                    lines[i] += " -> " + math.floor(diff/2)*' ' + '[' + phase.nodes[i].label + ']' + math.ceil(diff/2)*' '
 
         output = ""
         for line in lines:
@@ -35,14 +35,11 @@ class Circuit():
         return str(output)
 
     def addInput(self, qubit=Qubit(), location=None):
-        if location is None:
-            self.inputs.append(qubit)
-        else:
-            self.inputs.insert(location, qubit)
+        self.inputs.addGate(qubit, location)
 
     def addPhase(self, phase=None, location=None):
         if phase is None:
-            phase = Phase(size=len(self.inputs))
+            phase = Phase(size=self.inputs.size)
         if location is None:
             self.phases.append(phase)
         else:
@@ -54,15 +51,13 @@ class Circuit():
         else:
             self.phases[locationX].addGate(gate, locationY)
 
-    def advancePhase(self, phase):
-        phase.eval()
-        print("Test: ")
-        print(self.currentPhase.mat)
-        print(phase.mat)
-        print(np.matmul(phase.mat, self.currentPhase.mat))
-
     def run(self):
-        self.currentPhase = self.inputs[0]
-        self.advancePhase(self.phases[0])
+        vector = self.inputs.eval()
+
+        for phase in self.phases:
+            matrix = phase.eval()
+            vector = np.matmul(matrix, vector)
+
+        return vector
 
     # TODO JSON export for visualization and other simulators?
