@@ -11,19 +11,24 @@ class Circuit():
         self.phases = list()
         self.currentPhase = None
 
+    def __repr__(self) -> str:
+        return 'Inputs: ({}), Circuit layout: {}'.format(','.join(map(lambda i: str(i), self.inputs)), '->'.join(map(lambda p: str(p), self.phases)))
+
     def addInput(self, qubit=Qubit(), location=None):
         if location is None:
             self.inputs.append(qubit)
         else:
             self.inputs.insert(location, qubit)
 
-    def addPhase(self, phase=Phase(), location=None):
+    def addPhase(self, phase=None, location=None):
+        if phase is None:
+            phase = Phase()
         if location is None:
             self.phases.append(phase)
         else:
             self.phases.insert(location, phase)
 
-    def addGate(self, gate=Gate(), locationX=None, locationY=None):
+    def addGate(self, gate, locationX=None, locationY=None):
         if locationX is None:
             self.phases[len(self.phases) - 1].addGate(gate, locationY)
         else:

@@ -6,8 +6,11 @@ from itertools import islice
 
 class Phase():
     def __init__(self, gates=list()):
-        self.gates = gates
+        self.gates = []
         self.mat = None
+
+    def __str__(self):
+        return "-".join(map(lambda g: g.label, self.gates))
 
     def addGate(self, gate=Gate(), location=None):
         if location is None:

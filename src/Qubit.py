@@ -9,7 +9,7 @@ class Qubit():
         self.mat = self.vector
 
     def __str__(self):
-        return "Qubit: " + str(self.vector)
+        return str(self.vector)
 
     def normalize(self):
         norm = np.linalg.norm(self.vector)
