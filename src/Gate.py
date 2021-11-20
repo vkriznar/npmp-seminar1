@@ -69,7 +69,7 @@ class CNOT(Gate):
 
 
 # CONTROLLED Z
-class Z(Gate):
+class CZ(Gate):
     def __init__(self):
-        super().__init__("Z")
+        super().__init__("CZ")
         self.mat = H() @ CNOT() @ H()
