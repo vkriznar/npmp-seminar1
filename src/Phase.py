@@ -5,7 +5,7 @@ from itertools import islice
 
 
 class Phase():
-    def __init__(self, gates=list()):
+    def __init__(self):
         self.gates = []
         self.mat = None
 
