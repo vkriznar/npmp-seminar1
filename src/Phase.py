@@ -14,7 +14,7 @@ class Phase():
     def __str__(self):
         return "-".join(map(lambda g: g.label, self.nodes))
 
-    def setSize(self, size):
+    def setSizeY(self, size):
         self.size = size
         nodes = list()
 
@@ -26,9 +26,11 @@ class Phase():
 
         self.nodes = nodes
 
-    def addGate(self, gate=Gate(), location=None):
-        for i in range(gate.inputSize):
-            self.nodes[location + i] = gate
+    def addNode(self, node=None, locationY=None):
+        if locationY is None:
+            self.nodes.append(node)
+        else:
+            self.nodes.insert(locationY, node)
 
     def setNode(self, node=None, locationY=None):
         for i in range(node.inputSize):

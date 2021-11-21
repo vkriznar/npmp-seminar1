@@ -55,17 +55,24 @@ class Circuit():
     # input size
     def setSizeY(self, sizeY):
         self.sizeY = sizeY
-        self.inputs.setSize(sizeY)
+        self.inputs.setSizeY(sizeY)
 
         for phase in self.phases:
-            phase.setSize(sizeY)
+            phase.setSizeY(sizeY)
 
     def setSize(self, sizeX, sizeY):
         self.setSizeX(sizeX)
         self.setSizeY(sizeY)
 
-    #def addInput(self, qubit=Qubit(), location=None):
-    #    self.inputs.addGate(qubit, location)
+    def addInput(self, qubit=Qubit(), locationY=None):
+        if locationY < self.sizeY:
+            self.inputs.addNode(qubit, locationY)
+
+            self.setSizeY(self.sizeY + 1)
+        else:
+            self.setSizeY(locationY + 1)
+
+            self.inputs.setNode(qubit, locationY)
 
     def setInput(self, qubit=None, locationY=None):
         self.inputs.setNode(qubit, locationY)
@@ -84,7 +91,7 @@ class Circuit():
         else:
             self.setSizeX(locationX + 1)
 
-            self.phases[locationX] = phase
+            self.setPhase(phase, locationX)
 
     def setPhase(self, phase=None, locationX=None):
         if phase is None:
