@@ -70,14 +70,21 @@ class Circuit():
     def setInput(self, qubit=None, locationY=None):
         self.inputs.setNode(qubit, locationY)
 
-    #def addPhase(self, phase=None, locationX=None):
-    #    if phase is None:
-    #        phase = Phase(size=self.sizeY)
+    def addPhase(self, phase=None, locationX=None):
+        if phase is None:
+            phase = Phase(size=self.sizeY)
 
-    #    if locationX is None:
-    #        self.phases.append(phase)
-    #    else:
-    #        self.phases.insert(locationX, phase)
+        if locationX < self.sizeX:
+            if locationX is None:
+                self.phases.append(phase)
+            else:
+                self.phases.insert(locationX, phase)
+
+            self.setSizeX(self.sizeX + 1)
+        else:
+            self.setSizeX(locationX + 1)
+
+            self.phases[locationX] = phase
 
     def setPhase(self, phase=None, locationX=None):
         if phase is None:
