@@ -96,11 +96,14 @@ class Circuit():
 
     def run(self):
         vector = self.inputs.eval()
+        vectors = []
+        vectors.append(vector)
 
         for phase in self.phases:
             matrix = phase.eval()
             vector = np.matmul(matrix, vector)
+            vectors.append(vector)
 
-        return vector
+        return vector, vectors
 
     # TODO JSON export for visualization and other simulators?
