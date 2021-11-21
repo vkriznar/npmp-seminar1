@@ -121,5 +121,10 @@ class CNOT(Gate):
 # CONTROLLED Z
 class CZ(Gate):
     def __init__(self):
-        super().__init__("CZ")
-        self.mat = H() @ CNOT() @ H()
+        super().__init__("CZ", inputSize=2, matSize=4)
+        self.mat = np.array([
+            [1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, -1]
+        ])
