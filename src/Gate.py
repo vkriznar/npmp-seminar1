@@ -121,5 +121,40 @@ class CNOT(Gate):
 # CONTROLLED Z
 class CZ(Gate):
     def __init__(self):
-        super().__init__("CZ")
-        self.mat = H() @ CNOT() @ H()
+        super().__init__("CZ", inputSize=2, matSize=4)
+        self.mat = np.array([
+            [1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, -1]
+        ])
+
+# MULTI CONTROLLED TOFOLLI
+class MCT(Gate):
+    def __init__(self):
+        super().__init__("MCT", inputSize=3, matSize=8)
+        self.mat = np.array([
+            [1, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 0]
+        ])
+
+# GROVER3 ORACLE
+class G3(Gate):
+    def __init__(self):
+        super().__init__("G3", inputSize=3, matSize=8)
+        self.mat = np.array([
+            [1, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, -1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0],
+            [0, 0, 0, 0, 0, 0, -1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 1]
+        ])
