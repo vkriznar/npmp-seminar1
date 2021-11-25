@@ -21,16 +21,43 @@ class Circuit():
     def __repr__(self):
         lines = dict()
 
-        for i in range(self.inputs.size):
+        for i in range(self.sizeY):
             lines[i] = str(self.inputs.nodes[i])
 
         for phase in self.phases:
-            for i in range(self.inputs.size):
-                if phase.nodes[i] is None:
+            last_node = None
+            input = None
+            for i in range(self.sizeY):
+                node = phase.nodes[i]
+
+                if node is None:
                     lines[i] += " -> " + (phase.getMaxLableLength()+2)*'-'
                 else:
-                    diff = phase.getMaxLableLength() - len(phase.nodes[i].label)
-                    lines[i] += " -> " + math.floor(diff/2)*' ' + '[' + phase.nodes[i].label + ']' + math.ceil(diff/2)*' '
+                    if last_node is node:
+                        input += 1
+                    else:
+                        input = 1
+
+                    last_node = node
+
+
+                    l1 = '['
+                    label = node.label
+                    l2 = ']'
+                    if node.inputSize > 1 and input == 1:
+                        l1 = '⌈'
+                        l2 = '⌉'
+                    if node.inputSize > 1 and 1 < input and input < node.inputSize:
+                        l1 = '|'
+                        label = len(node.label)*' '
+                        l2 = '|'
+                    if node.inputSize > 1 and input == node.inputSize:
+                        l1 = '⌊'
+                        label = len(node.label)*' '
+                        l2 = '⌋'
+
+                    diff = phase.getMaxLableLength() - len(node.label)
+                    lines[i] += " -> " + math.floor(diff/2)*' ' + l1 + label + l2 + math.ceil(diff/2)*' '
 
         output = ""
         for line in lines:
