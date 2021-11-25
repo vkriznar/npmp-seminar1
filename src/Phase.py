@@ -28,9 +28,11 @@ class Phase():
 
     def addNode(self, node=None, locationY=None):
         if locationY is None:
-            self.nodes.append(node)
+            for i in range(node.inputSize):
+                self.nodes.append(node)
         else:
-            self.nodes.insert(locationY, node)
+            for i in range(node.inputSize):
+                self.nodes.insert(locationY + i, node)
 
     def setNode(self, node=None, locationY=None):
         for i in range(node.inputSize):
