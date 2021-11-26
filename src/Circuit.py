@@ -141,6 +141,12 @@ class Circuit():
         vectors.append(vector)
 
         for phase in self.phases:
+            if(phase.getNormalizedGates()[0].label == "M"):
+                probabilities = vector**2
+                probabilities = [float(float(i) / sum(probabilities)) for i in probabilities]
+                index = np.random.choice(range(len(probabilities)), p=probabilities)
+                print("Measure: " + format(index, '0'+str(self.sizeY)+'b'))
+                continue
             matrix = phase.eval()
             vector = np.matmul(matrix, vector)
             vectors.append(vector)

@@ -167,3 +167,11 @@ class G3(Gate):
             [0, 0, 0, 0, 0, 0, -1, 0],
             [0, 0, 0, 0, 0, 0, 0, 1]
         ])
+
+class Measure(Gate):
+    def __init__(self):
+        super().__init__("M", inputSize=1, matSize=2)
+        self.mat = np.array([
+            [1, 0],
+            [0, 1]
+        ])
