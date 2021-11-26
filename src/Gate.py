@@ -63,6 +63,15 @@ class H(Gate):
             [1, -1]
         ])
 
+# PHASE SHIFT
+class PS(Gate):
+    def __init__(self, phi):
+        super().__init__("PS", inputSize=1, matSize=2)
+        self.mat = np.array([
+            [1,  0],
+            [0, math.cos(phi) + math.sin(phi)*1j]
+        ])
+
 
 # PHASE Z = PAULI Z
 class Z(Gate):
